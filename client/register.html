@@ -1,0 +1,32 @@
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <div ng-app="app" ng-controller="myCtrl">
+        <p>Name: <input type="text" name="name" ng-model="name" required /></p>
+        <p>Email: <input type="text" name="email" ng-model="email" required /></p>
+        <p>Password: <input type="text" name="pwd" ng-model="pwd" required /></p>
+        <button ng-click="Register()">Register</button>
+        <a href="login.html">login</a>
+        <hr />
+        {{ PostDataResponse }}
+    </div>
+    
+	<script>
+	
+        var app = angular.module("app",[]);
+        app.controller("myCtrl", function($scope,$http){
+        $scope.Register = function() {
+            var data = {
+                name : $scope.name,email : $scope.email,password : $scope.pwd
+            }
+            $http.post('/users/register', data)
+                .success(function (data, status, headers, config) {
+                    $scope.PostDataResponse = data;
+                })
+                .error(function(data, status, header, config){
+                    $scope.PostDataResponse = "Data: " + status;
+                });
+        };
+		});
+    </script>
+ </body>

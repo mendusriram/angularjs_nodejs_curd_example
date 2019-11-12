@@ -1,0 +1,42 @@
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <div ng-app="app" ng-controller="myCtrl">
+        <p>Email: <input type="text" name="email" ng-model="email" required /></p>
+        <p>Password: <input type="text" name="pwd" ng-model="pwd" required /></p>
+        <button ng-click="UserLogin()">Submit</button>
+        <a href="register.html">Register</a>
+        <hr />
+        {{ PostDataResponse }}
+    </div>
+    
+	<script>
+	
+        var app = angular.module("app",[]);
+        app.controller("myCtrl", function($scope,$http,$window){
+        $scope.UserLogin = function() {
+            var data = {
+                    email : $scope.email,password : $scope.pwd
+                }
+            $http.post('/users/login', data)
+                .success(function (data, status, headers, config) {
+					//alert(data[0].id);
+					$window.location= "view.html?id="+data[0].id;
+                })
+                .error(function(data, status, header, config){
+                    $scope.PostDataResponse = "Data: " + status;
+                });
+        };
+		
+		$scope.GetData = function() {
+            $http.get('/users/login?id=1')
+                .success(function (data, status, headers, config) {
+                    $scope.PostDataResponse = data;
+                })
+                .error(function(data, status, header, config){
+                    $scope.PostDataResponse = "Data: " + status;
+                });
+        };  
+        });
+    </script>
+ </body>

@@ -1,0 +1,11 @@
+'use strict';
+var express = require('express');
+var app = express();
+var router = express.Router();
+var bodyParser = require("body-parser");
+var db = require('./db');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static('./client'));
+require('./routes')(app);
+app.listen(8000);

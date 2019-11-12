@@ -1,0 +1,7 @@
+{
+    "dbhost": "localhost",
+    "dbname": "angular_db",
+    "dbuser": "root",
+    "dbpassword": "",
+    "port": "3306"
+}

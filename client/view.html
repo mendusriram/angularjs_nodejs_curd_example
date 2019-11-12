@@ -1,0 +1,44 @@
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <div ng-app="app" ng-controller="myCtrl">
+        <p>Name: <input type="text" name="name" ng-model="name" required /></p>
+        <p>Email: <input type="text" name="email" ng-model="email" required /></p>
+        <p>Password: <input type="text" name="pwd" ng-model="pwd" required /></p>
+        <hr/>
+        <button ng-click="UserDelete()">Delete</button>
+    </div>
+    
+	<script>
+	
+        var app = angular.module("app",[]);
+        app.controller("myCtrl", function($scope,$http, $location){
+			
+			$scope.UserDelete = function() {
+            $http.delete('/users/delete/2')
+                .success(function (data, status, headers, config) {
+                    alert(data);
+                })
+                .error(function(data, status, header, config){
+                    $scope.PostDataResponse = "Data: " + status;
+                });
+          };
+			
+        //$scope.Register = function() {
+			var params = $location.search();
+            var data = {
+                id : 2
+            }
+            $http.get('/users/details/2')
+                .success(function (data, status, headers, config) {
+                    $scope.name = data[0].name;
+					$scope.email = data[0].email;
+					$scope.pwd = data[0].password;
+                })
+                .error(function(data, status, header, config){
+                    $scope.PostDataResponse = "Data: " + status;
+                });
+        //};
+		});
+    </script>
+ </body>
